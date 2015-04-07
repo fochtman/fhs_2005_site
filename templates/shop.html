@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% load staticfiles %}
+
+{% block shop %}
+<br>
+<br>
+<br>
+<br>
+<p> TEST </p>
+<div class="container">
+    <form action="" method="POST">
+      {% csrf_token %}
+      <script
+        src="https://checkout.stripe.com/checkout.js" class="stripe-button"
+        data-key="pk_test_7gQww1UajKTpmBrT5amJxAuv"
+        data-amount="2000"
+        data-name="Demo Site"
+        data-description="2 widgets ($20.00)"
+        data-image="/128x128.png">
+      </script>
+    </form>
+</div>
+<br>
+{% endblock %}
