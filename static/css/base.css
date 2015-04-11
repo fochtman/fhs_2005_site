@@ -22,12 +22,6 @@ body {
     padding: 16px;
 }
 
-/*
-.glyphicon {
-    color: white;
-}*/
-
-
 .container-a {
     text-align: center;
     /*margin-top: 16px;*/
@@ -50,9 +44,13 @@ body {
     margin: auto;
 }
 
-a:hover     { color: #739AC5; /*seurat blue*/    }
-a:active    { color: #FCFFF0; /*titaniumwhite */}
+a:link      { color: white;     /*titaniumwhite */}
+a:visited   { color: #FCFFF0;   /*titaniumwhite */}
+a:hover     { color: gray;      /*seurat blue   */}
+a:active    { color: #FCFFF0;   /*titaniumwhite */}
 
-#g-span:hover  { background-color: transparent; }
-#g-span:active { background-color: transparent; }
+#g-span:link    { background-color: transparent; }
+#g-span:visited { background-color: transparent; }
+#g-span:hover   { background-color: transparent; }
+#g-span:active  { background-color: transparent; }
 
