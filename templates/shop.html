@@ -10,7 +10,12 @@
 <br>
 <p> TEST </p>
 <div class="container-shop">
-    <form action="/charge" method="POST">
+    <!-- TODO add customer info and product id stuff, e.g. set up models -->
+    <!-- <form action="{% url 'home:charge' customer_info, product.id, method="POST"> -->
+    <!-- see to use pub-key from settings.py see
+    http://stackoverflow.com/questions/433162/can-i-access-constants-in-settings-py-from-templates-in-django
+    -->
+    <form action="{% url 'home:charge' %}" method="POST">
         {% csrf_token %}
         <script
         src="https://checkout.stripe.com/checkout.js" class="stripe-button"
@@ -19,6 +24,8 @@
         data-name="Reunion"
         data-description="1 Ticket ($20.00)"
         data-image="{% static 'img/fhsLogo1.png' %}"
+        data-billingAddress="true"
+        data-shippingAddress="true"
         data-notrack>
         </script>
     </form>

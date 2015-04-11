@@ -2,6 +2,8 @@ from django.views.generic import TemplateView
 from django.http import HttpResponseRedirect
 from django.core.urlresolvers import reverse
 
+import stripe
+
 
 class HomeView(TemplateView):
     template_name = "home.html"
@@ -10,8 +12,8 @@ class HomeView(TemplateView):
 class ShopView(TemplateView):
     template_name = "shop.html"
 
-
-def vote(request, question_id):
+'''
+def charge(request, question_id):
     p = get_object_or_404(Question, pk=question_id)
     try:
         selected_choice = p.choice_set.get(pk=request.POST['choice'])
@@ -28,3 +30,40 @@ def vote(request, question_id):
         # with POST data. This prevents data from being posted twice if a
         # user hits the Back button.
         return HttpResponseRedirect(reverse('polls:results', args=(p.id,)))
+'''
+
+# eventually add product and cust. info returned in the form,
+# which will require adding models
+
+
+def charge(request):
+
+    amnt = 100000
+
+    '''
+    customer = stripe.Customer.create(
+        email='joe@blow.com',
+        card=request.POST['stripeToken']
+    )
+    '''
+
+    token = request.POST['stripeToken']
+
+    try:
+        charge = stripe.Charge.create(
+            #customer=customer.id,
+            amount=amnt,
+            currency='usd',
+            source=token,
+            description="Reunion Ticket"
+        )
+    except stripe.CardError, e:
+        # the card has been declined
+        # redisplay shopping page with js alert or something
+        # return render(request, 'home/shop.html', {
+        #   'error_msg' : ...
+        # })
+        pass
+    else:
+        return HttpResponseRedirect(reverse('home:shop'))
+
