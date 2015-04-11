@@ -13,7 +13,46 @@ body {
     background-color: white;
 }
 
-.topnav {
-    font-size: 14px;
-    background-color: white;
+.navbar-brand {
+    font-size: 48px;
+    padding-left: 64px;
 }
+
+.content-section-a {
+    padding: 16px;
+}
+
+/*
+.glyphicon {
+    color: white;
+}*/
+
+
+.container-a {
+    text-align: center;
+    /*margin-top: 16px;*/
+    max-width: 85%;
+    min-width: 64%;
+    margin: auto;
+    background-color: #6d19a3;
+    color: white;
+    overflow: hidden;
+    border-radius: 55px;
+    padding-top: 2%;
+    padding-bottom: 2%;
+}
+
+.container-a .navbar-collapse {
+    padding-right: 64px;
+}
+
+.navbar-nav {
+    margin: auto;
+}
+
+a:hover     { color: #739AC5; /*seurat blue*/    }
+a:active    { color: #FCFFF0; /*titaniumwhite */}
+
+#g-span:hover  { background-color: transparent; }
+#g-span:active { background-color: transparent; }
+
