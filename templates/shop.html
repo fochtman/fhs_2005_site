@@ -2,23 +2,27 @@
 {% load staticfiles %}
 
 {% block shop %}
+<link href="{% static 'css/base.css' %}" rel="stylesheet">
+
 <br>
 <br>
 <br>
 <br>
 <p> TEST </p>
-<div class="container">
-    <form action="" method="POST">
-      {% csrf_token %}
-      <script
+<div class="container-shop">
+    <form action="/charge" method="POST">
+        {% csrf_token %}
+        <script
         src="https://checkout.stripe.com/checkout.js" class="stripe-button"
         data-key="pk_test_7gQww1UajKTpmBrT5amJxAuv"
         data-amount="2000"
-        data-name="Demo Site"
-        data-description="2 widgets ($20.00)"
-        data-image="/128x128.png">
-      </script>
+        data-name="Reunion"
+        data-description="1 Ticket ($20.00)"
+        data-image="{% static 'img/fhsLogo1.png' %}"
+        data-notrack>
+        </script>
     </form>
 </div>
 <br>
+
 {% endblock %}
