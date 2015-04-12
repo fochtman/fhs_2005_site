@@ -9,8 +9,16 @@ class HomeView(TemplateView):
     template_name = "home.html"
 
 
+class EventsView(TemplateView):
+    template_name = "events.html"
+
+
 class ShopView(TemplateView):
     template_name = "shop.html"
+
+
+class ConnectView(TemplateView):
+    template_name = "connect.html"
 
 
 class SponsorsView(TemplateView):

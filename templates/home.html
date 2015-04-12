@@ -9,38 +9,47 @@
     <div class="container">
         <div class="row">
             <div class="col-md-6 text-center">
-                <div class="thumbnail">
-                    <img src="{% static 'img/calendar-clock.png' %}" alt="...">
-                    <div class="caption">
-                        <h2>EVENTS</h2>
+                <a href="{% url 'home:events' %}" >
+                    <div class="thumbnail">
+                        <img src="{% static 'img/calendar-clock.png' %}" alt="...">
+                        <div class="caption">
+                            <h2>EVENTS</h2>
+                        </div>
                     </div>
-                </div>
+                </a>
             </div>
             <div class="col-md-6 text-center">
-                <div class="thumbnail">
-                    <img src="{% static 'img/shop.png' %}" alt="...">
-                    <div class="caption">
-                        <h2>SHOP</h2>
+                <a href="{% url 'home:shop' %}" >
+                    <div class="thumbnail">
+                        <img src="{% static 'img/shop.png' %}" alt="...">
+                        <div class="caption">
+                            <h2>SHOP</h2>
+                        </div>
                     </div>
-                </div>
+                </a>
             </div>
         </div>
         <div class="row">
+            <br>
             <div class="col-md-6 text-center">
-                <div class="thumbnail">
-                    <img src="{% static 'img/connect.png' %}" alt="...">
-                    <div class="caption">
-                        <h2>CONNECT</h2>
+                <a href="{% url 'home:connect' %}" >
+                    <div class="thumbnail">
+                        <img src="{% static 'img/connect.png' %}" alt="...">
+                        <div class="caption">
+                            <h2>CONNECT</h2>
+                        </div>
                     </div>
-                </div>
+                </a>
             </div>
             <div class="col-md-6 text-center">
-                <div class="thumbnail">
-                    <img src="{% static 'img/heart.png' %}" alt="...">
-                    <div class="caption">
-                        <h2>SPONSORS</h2>
+                <a href="{% url 'home:sponsors' %}" >
+                    <div class="thumbnail">
+                        <img src="{% static 'img/heart.png' %}" alt="...">
+                        <div class="caption">
+                            <h2>SPONSORS</h2>
+                        </div>
                     </div>
-                </div>
+                </a>
             </div>
         </div>
     </div>
