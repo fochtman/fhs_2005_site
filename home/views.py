@@ -12,6 +12,10 @@ class HomeView(TemplateView):
 class ShopView(TemplateView):
     template_name = "shop.html"
 
+
+class SponsorsView(TemplateView):
+    template_name = "sponsors.html"
+
 '''
 def charge(request, question_id):
     p = get_object_or_404(Question, pk=question_id)
@@ -40,18 +44,13 @@ def charge(request):
 
     amnt = 100000
 
-    '''
-    customer = stripe.Customer.create(
-        email='joe@blow.com',
-        card=request.POST['stripeToken']
-    )
-    '''
+    # customer=customer.id,
+    # TODO: send email receipt
 
     token = request.POST['stripeToken']
 
     try:
         charge = stripe.Charge.create(
-            #customer=customer.id,
             amount=amnt,
             currency='usd',
             source=token,
