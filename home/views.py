@@ -1,5 +1,6 @@
 from django.views.generic import TemplateView
 from django.http import HttpResponseRedirect
+from django.shortcuts import render
 from django.core.urlresolvers import reverse
 
 import stripe
@@ -23,6 +24,10 @@ class ConnectView(TemplateView):
 
 class SponsorsView(TemplateView):
     template_name = "sponsors.html"
+
+
+class SuccessView(TemplateView):
+    template_name = "success.html"
 
 '''
 def charge(request, question_id):
@@ -72,5 +77,13 @@ def charge(request):
         # })
         pass
     else:
-        return HttpResponseRedirect(reverse('home:shop'))
+        # logs = {'ok': True}
+        # url = reverse('notamember', kwargs={'classname': classname})
+        # return HttpResponseRedirect(url)
+        # url = reverse('home:shop', kwargs={'ok': True})
+        # return HttpResponseRedirect(url)
+        # return render(request, 'home:shop', logs)
+        # return render(reverse('home:success', logs))
+
+        return HttpResponseRedirect(reverse('home:success'))
 

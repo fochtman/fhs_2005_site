@@ -2,20 +2,14 @@
 {% load staticfiles %}
 
 {% block shop %}
-<link href="{% static 'css/base.css' %}" rel="stylesheet">
 
-<!-- TODO add customer info and product id stuff, e.g. set up models -->
-<!-- <form action="{% url 'home:charge' customer_info, product.id, method="POST"> -->
-<!-- see to use pub-key from settings.py see
-http://stackoverflow.com/questions/433162/can-i-access-constants-in-settings-py-from-templates-in-django
--->
-<!-- data-billingAddress="true"
-data-shippingAddress="true" -->
-<br>
-<br>
-<br>
-<br>
+{% block success %}
+{% endblock %}
 
+<br>
+<br>
+<br>
+<br>
 <div class="content-section-a">
     <div class="container">
         <div class="row">
@@ -30,7 +24,10 @@ data-shippingAddress="true" -->
                         <!-- TODO add customer info and product id stuff, e.g. set up models -->
                         <!-- <form action="{% url 'home:charge' customer_info, product.id, method="POST"> -->
                         <!-- see to use pub-key from settings.py see
+                        <script src="https://checkout.stripe.com/checkout.js"></script>
                         http://stackoverflow.com/questions/433162/can-i-access-constants-in-settings-py-from-templates-in-django
+                        data-billingAddress="true"
+                        data-shippingAddress="true"
                         -->
                         <form action="{% url 'home:charge' %}" method="POST">
                             {% csrf_token %}
@@ -41,7 +38,7 @@ data-shippingAddress="true" -->
                             <script
                                     src="https://checkout.stripe.com/checkout.js" class="stripe-button"
                                     data-key="pk_test_7gQww1UajKTpmBrT5amJxAuv"
-                                    data-name="Reunion"
+                                    data-name="fhs2005.org"
                                     data-description="1 Reunion Ticket"
                                     data-amount="2000"
                                     data-image="{% static 'img/fhsLogo1.png' %}"
@@ -50,10 +47,7 @@ data-shippingAddress="true" -->
                                     data-shippingAddress="true"
                                     data-notrack>
                             </script>
-                            <!-- data-billingAddress="true"
-                            data-shippingAddress="true" -->
                         </form>
-                        <script src="https://checkout.stripe.com/checkout.js"></script>
                     </div>
                     <br>
                 </div>
@@ -75,8 +69,8 @@ data-shippingAddress="true" -->
                             <script
                                     src="https://checkout.stripe.com/checkout.js" class="stripe-button"
                                     data-key="pk_test_7gQww1UajKTpmBrT5amJxAuv"
-                                    data-name="Reunion"
-                                    data-description="1 Reunion Ticket"
+                                    data-name="fhs2005.org"
+                                    data-description="T-Shirt"
                                     data-amount="2000"
                                     data-image="{% static 'img/fhsLogo1.png' %}"
                                     data-zip-code="true"
@@ -85,7 +79,6 @@ data-shippingAddress="true" -->
                                     data-notrack>
                             </script>
                         </form>
-                        <script src="https://checkout.stripe.com/checkout.js"></script>
                     </div>
                     <br>
                 </div>
@@ -95,5 +88,4 @@ data-shippingAddress="true" -->
 </div>
 
 <br>
-
 {% endblock %}

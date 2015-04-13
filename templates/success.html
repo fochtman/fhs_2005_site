@@ -1,0 +1,32 @@
+{% extends "shop.html" %}
+{% load staticfiles %}
+
+{% block success %}
+
+<script type="text/javascript">
+    $(window).load(function(){
+        $('#myModal').modal('show');
+    });
+</script>
+
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <a href="{% url 'home:shop' %}" class="btn btn-info close"> &times; </a>
+                <h4 class="modal-title" id="myModalLabel">SUCCESS!</h4>
+            </div>
+            <div class="modal-body">
+                Thank you for making your purchase.
+                <ul>
+                    <li> Please check your email address for your receipt.             </li>
+                    <li> Your purchases will be shipped to you in 3 - 5 business days. </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+
+
