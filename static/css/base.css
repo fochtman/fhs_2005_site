@@ -67,7 +67,7 @@ a:active    { color: #FCFFF0;   /*titaniumwhite */}
     font-size: 16px;
     text-align: center;
     line-height: 1.42;
-    font: bold;
+    font-weight: bold;
 }
 
 .btn.active {
@@ -75,4 +75,31 @@ a:active    { color: #FCFFF0;   /*titaniumwhite */}
     -webkit-box-shadow:inset 0 0 0 0 transparent;
 }
 
+button {
+    border: transparent;
+    background-color: transparent;
+    margin-left: 4px;
+    margin-right: 4px;
+}
+
+input[type=number] {
+    width: 32px;
+    margin-left: 4px;
+    margin-right: 4px;
+    margin-bottom: 10px;
+    border: transparent;
+    font-weight: bold;
+    /*text-align: center;*/
+}
+
+input[type=button] {
+    width: 120px;
+    margin-left: 35px;
+    display: block;
+}
+
+.quantity-select {
+    margin: auto;
+    padding: 10px 10px;
+}
 /*battleship	#D0D2C4*/

@@ -18,25 +18,27 @@ data-shippingAddress="true"
 <br>
 <br>
 <br>
+
 <script>
-function incValue()
-{
-    var value = parseInt(document.getElementById('qty').value, 10);
-    value = isNaN(value) ? 0 : value;
-    value++;
-    document.getElementById('qty').value = value;
-}
-function decValue()
-{
-    var value = parseInt(document.getElementById('qty').value, 10);
-    value = isNaN(value) ? 0 : value;
-    if (value > 0) {
-        value--;
-        document.getElementById('qty').value = value;
+    function incValue(name)
+    {
+        var value = parseInt(document.getElementById(name).value, 10);
+        value = isNaN(value) ? 0 : value;
+        value++;
+        document.getElementById(name).value = value;
     }
-}
+    function decValue(name)
+    {
+        var value = parseInt(document.getElementById(name).value, 10);
+        value = isNaN(value) ? 0 : value;
+        if (value > 0) {
+            value--;
+            document.getElementById(name).value = value;
+        }
+    }
 </script>
-<div class="content-section-a">
+
+<div class="content-section-a" id="tmpx">
     <form action="{% url 'home:charge' %}" method="POST">
         {% csrf_token %}
         <div class="container">
@@ -47,12 +49,14 @@ function decValue()
                             <br>
                             <img src="{% static 'img/ticket.png' %}" alt="...">
                             <div class="caption">
-                                <h2>REUNION TICKETS</h2>
+                                <h2>$30.00</h2>
                             </div>
-                        </div>
-                        <div>
-                            <label for="qty-1">Quantity</label>
-                            <input type="text" name="qty-1" id="qty-1" class="qty" value="0" />
+                            <h4>
+                                <label>QTY.</label>
+                                <button type="button" onclick="decValue('tk0')" class="glyphicon glyphicon-chevron-down"> </button>
+                                <button type="button" onclick="incValue('tk0')" class="glyphicon glyphicon-chevron-up"> </button>
+                                <input type="number" name="tk0" id="tk0" value="0" readonly size="2">
+                                </h4>
                         </div>
                     </div>
                 </div>
@@ -62,8 +66,14 @@ function decValue()
                             <br>
                             <img src="{% static 'img/t-shirt.png' %}" alt="...">
                             <div class="caption">
-                                <h2>T-SHIRTS</h2>
+                                <h2>$20.00</h2>
                             </div>
+                            <h4>
+                                <label>QTY.</label>
+                                <button type="button" onclick="decValue('ts0')" class="glyphicon glyphicon-chevron-down"> </button>
+                                <button type="button" onclick="incValue('ts0')" class="glyphicon glyphicon-chevron-up"> </button>
+                                <input type="number" name="ts0" id="ts0" value="0" readonly size="2">
+                            </h4>
                             <!--<div class="tn-group" id="btn-group-a" data-toggle="buttons">-->
                             <div class="btn-group-a" data-toggle="buttons">
                                 <label class="btn t-size">
@@ -80,11 +90,6 @@ function decValue()
                                 </label>
                             </div>
 
-                        </div>
-                        <div>
-                                <input type="button" onclick="decValue()" value="-" />
-                                <input type="text" id="qty" value="0"/>
-                                <input type="button" onclick="incValue()" value="+" />
                         </div>
                         <script
                                 src="https://checkout.stripe.com/checkout.js" class="stripe-button"
@@ -103,5 +108,4 @@ function decValue()
         </div>
     </form>
 </div>
-
 {% endblock %}
