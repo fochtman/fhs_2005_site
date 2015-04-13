@@ -6,86 +6,102 @@
 {% block success %}
 {% endblock %}
 
+<!-- TODO add customer info and product id stuff, e.g. set up models -->
+<!-- <form action="{% url 'home:charge' customer_info, product.id, method="POST"> -->
+<!-- see to use pub-key from settings.py see
+<script src="https://checkout.stripe.com/checkout.js"></script>
+http://stackoverflow.com/questions/433162/can-i-access-constants-in-settings-py-from-templates-in-django
+data-billingAddress="true"
+data-shippingAddress="true"
+-->
 <br>
 <br>
 <br>
 <br>
+<script>
+function incValue()
+{
+    var value = parseInt(document.getElementById('qty').value, 10);
+    value = isNaN(value) ? 0 : value;
+    value++;
+    document.getElementById('qty').value = value;
+}
+function decValue()
+{
+    var value = parseInt(document.getElementById('qty').value, 10);
+    value = isNaN(value) ? 0 : value;
+    if (value > 0) {
+        value--;
+        document.getElementById('qty').value = value;
+    }
+}
+</script>
 <div class="content-section-a">
-    <div class="container">
-        <div class="row">
-            <div class="col-md-6 text-center">
-                <div class="thumbnail">
-                    <br>
-                    <img src="{% static 'img/ticket.png' %}" alt="...">
-                    <div class="caption">
-                        <h2>REUNION TICKETS</h2>
-                    </div>
+    <form action="{% url 'home:charge' %}" method="POST">
+        {% csrf_token %}
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6 text-center">
                     <div class="container-shop">
-                        <!-- TODO add customer info and product id stuff, e.g. set up models -->
-                        <!-- <form action="{% url 'home:charge' customer_info, product.id, method="POST"> -->
-                        <!-- see to use pub-key from settings.py see
-                        <script src="https://checkout.stripe.com/checkout.js"></script>
-                        http://stackoverflow.com/questions/433162/can-i-access-constants-in-settings-py-from-templates-in-django
-                        data-billingAddress="true"
-                        data-shippingAddress="true"
-                        -->
-                        <form action="{% url 'home:charge' %}" method="POST">
-                            {% csrf_token %}
-                            <div>
-                                <label for="qty-1">Quantity</label>
-                                <input type="text" name="qty-1" id="qty-1" class="qty" value="1" />
+                        <div class="thumbnail">
+                            <br>
+                            <img src="{% static 'img/ticket.png' %}" alt="...">
+                            <div class="caption">
+                                <h2>REUNION TICKETS</h2>
                             </div>
-                            <script
-                                    src="https://checkout.stripe.com/checkout.js" class="stripe-button"
-                                    data-key="pk_test_7gQww1UajKTpmBrT5amJxAuv"
-                                    data-name="fhs2005.org"
-                                    data-description="1 Reunion Ticket"
-                                    data-amount="2000"
-                                    data-image="{% static 'img/fhsLogo1.png' %}"
-                                    data-zip-code="true"
-                                    data-billingAddress="true"
-                                    data-shippingAddress="true"
-                                    data-notrack>
-                            </script>
-                        </form>
+                        </div>
+                        <div>
+                            <label for="qty-1">Quantity</label>
+                            <input type="text" name="qty-1" id="qty-1" class="qty" value="0" />
+                        </div>
                     </div>
-                    <br>
                 </div>
-            </div>
-            <div class="col-md-6 text-center">
-                <div class="thumbnail">
-                    <br>
-                    <img src="{% static 'img/t-shirt.png' %}" alt="...">
-                    <div class="caption">
-                        <h2>T-SHIRTS</h2>
-                    </div>
+                <div class="col-md-6 text-center">
                     <div class="container-shop">
-                        <form action="{% url 'home:charge' %}" method="POST">
-                            {% csrf_token %}
-                            <div>
-                                <label for="qty-1">Quantity</label>
-                                <input type="text" name="qty-1" id="qty-1" class="qty" value="1" />
+                        <div class="thumbnail">
+                            <br>
+                            <img src="{% static 'img/t-shirt.png' %}" alt="...">
+                            <div class="caption">
+                                <h2>T-SHIRTS</h2>
                             </div>
-                            <script
-                                    src="https://checkout.stripe.com/checkout.js" class="stripe-button"
-                                    data-key="pk_test_7gQww1UajKTpmBrT5amJxAuv"
-                                    data-name="fhs2005.org"
-                                    data-description="T-Shirt"
-                                    data-amount="2000"
-                                    data-image="{% static 'img/fhsLogo1.png' %}"
-                                    data-zip-code="true"
-                                    data-billingAddress="true"
-                                    data-shippingAddress="true"
-                                    data-notrack>
-                            </script>
-                        </form>
+                            <!--<div class="tn-group" id="btn-group-a" data-toggle="buttons">-->
+                            <div class="btn-group-a" data-toggle="buttons">
+                                <label class="btn t-size">
+                                    <input type="radio" name="options" id="option1" autocomplete="off" checked> S
+                                </label>
+                                <label class="btn t-size active">
+                                    <input type="radio" name="options" id="option2" autocomplete="off"> M
+                                </label>
+                                <label class="btn t-size">
+                                    <input type="radio" name="options" id="option3" autocomplete="off"> L
+                                </label>
+                                <label class="btn t-size">
+                                    <input type="radio" name="options" id="option4" autocomplete="off"> XL
+                                </label>
+                            </div>
+
+                        </div>
+                        <div>
+                                <input type="button" onclick="decValue()" value="-" />
+                                <input type="text" id="qty" value="0"/>
+                                <input type="button" onclick="incValue()" value="+" />
+                        </div>
+                        <script
+                                src="https://checkout.stripe.com/checkout.js" class="stripe-button"
+                                data-key="pk_test_7gQww1UajKTpmBrT5amJxAuv"
+                                data-name="fhs2005.org"
+                                data-description="T-Shirt"
+                                data-image="{% static 'img/fhsLogo1.png' %}"
+                                data-zip-code="true"
+                                data-billingAddress="true"
+                                data-shippingAddress="true"
+                                data-notrack>
+                        </script>
                     </div>
-                    <br>
                 </div>
             </div>
         </div>
-    </div>
+    </form>
 </div>
 
-<br>
 {% endblock %}
