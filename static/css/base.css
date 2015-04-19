@@ -89,6 +89,15 @@ input[type=number] {
     margin-bottom: 10px;
     border: transparent;
     font-weight: bold;
+}
+
+input[type=number]#oTotal {
+    width: 80px;
+    margin-left: 2px;
+    margin-right: 4px;
+    margin-bottom: 10px;
+    border: transparent;
+    font-weight: bold;
     /*text-align: center;*/
 }
 
@@ -102,4 +111,3 @@ input[type=button] {
     margin: auto;
     padding: 10px 10px;
 }
-/*battleship	#D0D2C4*/

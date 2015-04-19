@@ -54,36 +54,57 @@ def charge(request, question_id):
 
 
 def charge(request):
+    '''
+    print 'values'
+    print request.POST.values()
+    print 'keys'
+    print request.POST.keys()
+    '''
 
-    amnt = 100000
+    meta = {}
 
+    num_tickets = 'Number of tickets'
+    meta[num_tickets] = request.POST['tk0']
+
+    num_ts0 = 'Number of ts0'
+    meta[num_ts0] = int(request.POST['ts0'])
+
+    if meta[num_ts0] > 0:
+        tso_size = 'ts0_size'
+        meta[tso_size] = request.POST[tso_size]
+
+    amount = int(request.POST['oTotal']) * 100
+
+    # print meta
     # customer=customer.id,
     # TODO: send email receipt
 
     token = request.POST['stripeToken']
 
-    try:
-        charge = stripe.Charge.create(
-            amount=amnt,
-            currency='usd',
-            source=token,
-            description="Reunion Ticket"
-        )
-    except stripe.CardError, e:
-        # the card has been declined
-        # redisplay shopping page with js alert or something
-        # return render(request, 'home/shop.html', {
-        #   'error_msg' : ...
-        # })
-        pass
-    else:
-        # logs = {'ok': True}
-        # url = reverse('notamember', kwargs={'classname': classname})
-        # return HttpResponseRedirect(url)
-        # url = reverse('home:shop', kwargs={'ok': True})
-        # return HttpResponseRedirect(url)
-        # return render(request, 'home:shop', logs)
-        # return render(reverse('home:success', logs))
+    if amount > 0:
+        try:
+            charge = stripe.Charge.create(
+                amount=amount,
+                currency='usd',
+                source=token,
+                description="Reunion Purchase",
+                metadata=meta
+            )
+        except stripe.CardError, e:
+            # the card has been declined
+            # redisplay shopping page with js alert or something
+            # return render(request, 'home/shop.html', {
+            #   'error_msg' : ...
+            # })
+            pass
+        else:
+            # logs = {'ok': True}
+            # url = reverse('notamember', kwargs={'classname': classname})
+            # return HttpResponseRedirect(url)
+            # url = reverse('home:shop', kwargs={'ok': True})
+            # return HttpResponseRedirect(url)
+            # return render(request, 'home:shop', logs)
+            # return render(reverse('home:success', logs))
 
-        return HttpResponseRedirect(reverse('home:success'))
+            return HttpResponseRedirect(reverse('home:success'))
 

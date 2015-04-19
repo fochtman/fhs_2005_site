@@ -20,20 +20,17 @@ data-shippingAddress="true"
 <br>
 
 <script>
-    function incValue(name)
-    {
+    function dec(v, x) { return v - x; }
+    function inc(v, x) { return v + x; }
+
+    function deltaFunc(name, f, tDelta) {
         var value = parseInt(document.getElementById(name).value, 10);
         value = isNaN(value) ? 0 : value;
-        value++;
-        document.getElementById(name).value = value;
-    }
-    function decValue(name)
-    {
-        var value = parseInt(document.getElementById(name).value, 10);
-        value = isNaN(value) ? 0 : value;
-        if (value > 0) {
-            value--;
-            document.getElementById(name).value = value;
+        if (f(value, 1) >= 0) {
+            document.getElementById(name).value = f(value, 1);
+            var ot = parseInt(document.getElementById("oTotal").value);
+            //console.log(document.getElementById("oTotal"));
+            document.getElementById("oTotal").value = f(ot, tDelta);
         }
     }
 </script>
@@ -49,14 +46,14 @@ data-shippingAddress="true"
                             <br>
                             <img src="{% static 'img/ticket.png' %}" alt="...">
                             <div class="caption">
-                                <h2>$30.00</h2>
+                                <h2>$ 30</h2>
                             </div>
                             <h4>
                                 <label>QTY.</label>
-                                <button type="button" onclick="decValue('tk0')" class="glyphicon glyphicon-chevron-down"> </button>
-                                <button type="button" onclick="incValue('tk0')" class="glyphicon glyphicon-chevron-up"> </button>
+                                <button type="button" onclick="deltaFunc('tk0', inc, 30)" class="glyphicon glyphicon-chevron-up">   </button>
+                                <button type="button" onclick="deltaFunc('tk0', dec, 30)" class="glyphicon glyphicon-chevron-down"> </button>
                                 <input type="number" name="tk0" id="tk0" value="0" readonly size="2">
-                                </h4>
+                            </h4>
                         </div>
                     </div>
                 </div>
@@ -66,31 +63,40 @@ data-shippingAddress="true"
                             <br>
                             <img src="{% static 'img/t-shirt.png' %}" alt="...">
                             <div class="caption">
-                                <h2>$20.00</h2>
+                                <h2>$ 20</h2>
                             </div>
                             <h4>
                                 <label>QTY.</label>
-                                <button type="button" onclick="decValue('ts0')" class="glyphicon glyphicon-chevron-down"> </button>
-                                <button type="button" onclick="incValue('ts0')" class="glyphicon glyphicon-chevron-up"> </button>
+                                <button type="button" onclick="deltaFunc('ts0', inc, 20)" class="glyphicon glyphicon-chevron-up">   </button>
+                                <button type="button" onclick="deltaFunc('ts0', dec, 20)" class="glyphicon glyphicon-chevron-down"> </button>
                                 <input type="number" name="ts0" id="ts0" value="0" readonly size="2">
                             </h4>
-                            <!--<div class="tn-group" id="btn-group-a" data-toggle="buttons">-->
                             <div class="btn-group-a" data-toggle="buttons">
                                 <label class="btn t-size">
-                                    <input type="radio" name="options" id="option1" autocomplete="off" checked> S
+                                    <input type="radio" name="ts0_size" id="option1" value="S"> S
                                 </label>
                                 <label class="btn t-size active">
-                                    <input type="radio" name="options" id="option2" autocomplete="off"> M
+                                    <input type="radio" name="ts0_size" id="option2" value="M" checked> M
                                 </label>
                                 <label class="btn t-size">
-                                    <input type="radio" name="options" id="option3" autocomplete="off"> L
+                                    <input type="radio" name="ts0_size" id="option3" value="L"> L
                                 </label>
                                 <label class="btn t-size">
-                                    <input type="radio" name="options" id="option4" autocomplete="off"> XL
+                                    <input type="radio" name="ts0_size" id="option4" value="XL"> XL
                                 </label>
                             </div>
-
                         </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12 text-center">
+                    <br>
+                    <br>
+                    <h2>
+                        <label>$
+                            <input type="number" name="oTotal" id="oTotal" value="0" readonly size="4">
+                        </label>
                         <script
                                 src="https://checkout.stripe.com/checkout.js" class="stripe-button"
                                 data-key="pk_test_7gQww1UajKTpmBrT5amJxAuv"
@@ -102,7 +108,7 @@ data-shippingAddress="true"
                                 data-shippingAddress="true"
                                 data-notrack>
                         </script>
-                    </div>
+                    </h2>
                 </div>
             </div>
         </div>
