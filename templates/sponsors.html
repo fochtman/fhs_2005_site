@@ -1,18 +1,25 @@
 {% extends "base.html" %}
 {% load staticfiles %}
+
 {% block sponsors %}
 <link href="{% static 'css/sponsors.css' %}" rel="stylesheet">
     <div class="container">
+        <br>
+        <br>
         <div class="row">
-            <div class="sponsor">
-                <hr class="sponsor-divider">
-                <img class="sponsor-image" src="http://placehold.it/1024x256">
-                <hr class="sponsor-divider">
-                <img class="sponsor-image" src="http://placehold.it/1024x256">
-                <hr class="sponsor-divider">
-                <img class="sponsor-image" src="http://placehold.it/1024x256">
-                <hr class="sponsor-divider">
+            <div class="col-12">
+                <div class="sponsor">
+                    <img class="sponsor-image" src="http://placehold.it/1024x256">
+                    <br>
+                    <br>
+                    <img class="sponsor-image" src="http://placehold.it/1024x256">
+                    <br>
+                    <br>
+                    <img class="sponsor-image" src="http://placehold.it/1024x256">
+                </div>
             </div>
         </div>
+        <br>
+        <br>
     </div>
 {% endblock %}
