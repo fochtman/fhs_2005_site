@@ -28,8 +28,7 @@ data-shippingAddress="true"
         value = isNaN(value) ? 0 : value;
         if (f(value, 1) >= 0) {
             document.getElementById(name).value = f(value, 1);
-            var ot = parseInt(document.getElementById("oTotal").value);
-            //console.log(document.getElementById("oTotal"));
+            var ot = parseInt(document.getElementById("oTotal").value, 10);
             document.getElementById("oTotal").value = f(ot, tDelta);
         }
     }

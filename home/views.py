@@ -2,6 +2,20 @@ from django.views.generic import TemplateView
 from django.http import HttpResponseRedirect
 from django.shortcuts import render
 from django.core.urlresolvers import reverse
+from django.contrib.auth.decorators import login_required
+
+from django.template import RequestContext
+from django.contrib import messages
+from django.shortcuts import render_to_response
+
+from django.contrib.auth import logout
+from django.contrib.auth import authenticate, login
+
+from django.contrib.auth.decorators import login_required
+from django.utils.decorators import method_decorator
+
+from forms import *
+from models import FHSUser
 
 import stripe
 
@@ -17,9 +31,16 @@ class EventsView(TemplateView):
 class ShopView(TemplateView):
     template_name = "shop.html"
 
+    @method_decorator(login_required)
+    def dispatch(self, *args, **kwargs):
+        return super(ShopView, self).dispatch(*args, **kwargs)
 
 class ConnectView(TemplateView):
     template_name = "connect.html"
+
+    @method_decorator(login_required)
+    def dispatch(self, *args, **kwargs):
+        return super(ConnectView, self).dispatch(*args, **kwargs)
 
 
 class SponsorsView(TemplateView):
@@ -28,6 +49,89 @@ class SponsorsView(TemplateView):
 
 class SuccessView(TemplateView):
     template_name = "success.html"
+
+
+def register(request):
+    if request.method == 'POST':
+        form = RegistrationForm(request.POST)
+        if not form.is_valid():
+            messages.add_message(request, messages.ERROR, 'There was an error while creating account.')
+            context = RequestContext(request, {'form': form})
+            return render_to_response('register.html', context)
+        else:
+            # take care of building user object first
+            username = form.cleaned_data.get('username')
+            email = form.cleaned_data.get('email')
+            password = form.cleaned_data.get('password')
+            User.objects.create_user(username=username, password=password, email=email)
+            user = authenticate(username=username, password=password)
+            login(request, user)
+            '''
+            is_married = models.BooleanField(default=False)
+            ticket_num = models.IntegerField(default=0)
+            current_city = models.CharField(max_length=50)
+            current_state = models.CharField(max_length=50)
+            '''
+
+
+            messages.add_message(request, messages.SUCCESS, 'Your account was successfully created.')
+            return HttpResponseRedirect('/')
+    else:
+        context = RequestContext(request,  {'form': RegistrationForm()})
+        return render_to_response('register.html', context)
+
+def sign_in(request):
+    if request.user.is_authenticated():
+        return HttpResponseRedirect('/')
+    else:
+        if request.method == 'POST':
+            username = request.POST['username']
+            password = request.POST['password']
+            user = authenticate(username=username, password=password)
+            if user is not None:
+                if user.is_active:
+                    login(request, user)
+                    if 'next' in request.GET:
+                        return HttpResponseRedirect(request.GET['next'])
+                    else:
+                        return HttpResponseRedirect('/')
+                else:
+                    messages.add_message(request, messages.ERROR, 'Your account is deactivated.')
+                    context = RequestContext(request)
+                    return render_to_response('sign_in.html', context)
+            else:
+                messages.add_message(request, messages.ERROR, 'Username or password invalid.')
+                context = RequestContext(request)
+                return render_to_response('sign_in.html', context)
+        else:
+            context = RequestContext(request)
+            return render_to_response('sign_in.html', context)
+
+
+def sign_out(request):
+    logout(request)
+    return HttpResponseRedirect('/')
+
+'''
+def sign_in(request):
+    username = request.POST['username']
+    password = request.POST['password']
+    user = authenticate(username=username, password=password)
+    if user is not None:
+        if user.is_active:
+            login(request, user)
+            #return a successful response
+        else:
+            # display some kind of error and try again
+    else:
+        # state that user doesn't exist
+        # redirect to sign-up page
+
+        # ...
+
+def sign_out(request):
+    logout(request)
+'''
 
 '''
 def charge(request, question_id):

@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+
+{% block register %}
+<link href="{% static 'css/auth.css' %}" rel="stylesheet">
+<div class="content-section-a" id="tmpx">
+  <form action="{% url 'home:register' %}" method="POST">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-6 ">
+          {% csrf_token %}
+          <label for="{{ form.username.id_for_label }}">{{ form.username.label }}</label>
+          <div class="form-row">
+            <!--<span class="info">(Usernames may contain <strong>alphanumeric</strong>, <strong>_</strong> and <strong>.</strong> characters)</span>-->
+            {{ form.username }}
+            {{ form.username.errors }}
+          </div>
+          <label for="{{ form.email.id_for_label }}">{{ form.email.label }}</label>
+          <div class="form-row">
+            {{ form.email }}
+            {{ form.email.errors }}
+          </div>
+          <label for="{{ form.password.id_for_label }}">{{ form.password.label }}</label>
+          <div class="form-row">
+            {{ form.password }}
+            {{ form.password.errors }}
+          </div>
+          <label for="{{ form.confirm_password.id_for_label }}">{{ form.confirm_password.label }}</label>
+          <div class="form-row">
+            {{ form.confirm_password }}
+            {{ form.confirm_password.errors }}
+          </div>
+          <button type="submit" class="btn btn-success btn-large">Create an account</button>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>
+{% endblock register %}
