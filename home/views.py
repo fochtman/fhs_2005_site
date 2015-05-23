@@ -50,12 +50,27 @@ class SponsorsView(TemplateView):
 class SuccessView(TemplateView):
     template_name = "success.html"
 
-def register2(request):
+def register(request):
     if request.method == 'POST':
         form = FHSUserRegistrationForm(request.POST)
-        # after we validate the form data with .is_valid()
-        # we can access the data via form.cleaned_data[<fieldname>]
         if form.is_valid():
+            first_name      = form.cleaned_data['first_name']
+            last_name       = form.cleaned_data['last_name']
+            email           = form.cleaned_data['email']
+            password        = form.cleaned_data['password0']
+            username        = email
+            is_married      = True if form.cleaned_data['is_married'] == 'YES' else False
+            num_kids        = int(form.cleaned_data['num_kids'])
+            profession      = form.cleaned_data['profession']
+            current_city    = form.cleaned_data['current_city']
+            current_state   = form.cleaned_data['current_state']
+
+            User.objects.create_user(username=username, password=password, email=email)
+            user = authenticate(username=username, password=password)
+            login(request, user)
+
+            fhs_user = FHSUser(user=user, is_married=is_married, num_kids=num_kids, profession=profession, num_ticket=0, current_city=current_city, current_state=current_state)
+            fhs_user.save()
             '''
             username = form.cleaned_data['username']
             email = form.cleaned_data['email']
@@ -68,8 +83,6 @@ def register2(request):
             current_city = form.cleaned_data['current_city']
             current_state = form.cleaned_data['current_state']
 
-            fhs_user = FHSUser(user=user, is_married=is_married, ticket_num=0, current_city=current_city, current_state=current_state)
-            fhs_user.save()
             '''
 
             '''
@@ -85,38 +98,9 @@ def register2(request):
         else:
             messages.add_message(request, messages.ERROR, 'There was an error while creating account.')
             context = RequestContext(request, {'form': form})
-            return render_to_response('register2.html', context)
+            return render_to_response('register.html', context)
     else:
         context = RequestContext(request, {'form': FHSUserRegistrationForm()})
-        return render_to_response('register2.html', context)
-
-def register(request):
-    if request.method == 'POST':
-        form = RegistrationForm(request.POST)
-        if not form.is_valid():
-            messages.add_message(request, messages.ERROR, 'There was an error while creating account.')
-            context = RequestContext(request, {'form': form})
-            return render_to_response('register.html', context)
-        else:
-            # take care of building user object first
-            username = form.cleaned_data.get('username')
-            email = form.cleaned_data.get('email')
-            password = form.cleaned_data.get('password')
-            User.objects.create_user(username=username, password=password, email=email)
-            user = authenticate(username=username, password=password)
-            login(request, user)
-            '''
-            is_married = models.BooleanField(default=False)
-            ticket_num = models.IntegerField(default=0)
-            current_city = models.CharField(max_length=50)
-            current_state = models.CharField(max_length=50)
-            '''
-
-
-            messages.add_message(request, messages.SUCCESS, 'Your account was successfully created.')
-            return HttpResponseRedirect('/')
-    else:
-        context = RequestContext(request,  {'form': RegistrationForm()})
         return render_to_response('register.html', context)
 
 def sign_in(request):

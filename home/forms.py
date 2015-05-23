@@ -52,13 +52,20 @@ class FHSUserRegistrationForm(forms.Form):
     valid_name  = [is_name_forbidden, is_name_invalid]
     valid_email = [is_email_unique]
 
+    def clean(self):
+        password1 = self.cleaned_data.get('password0')
+        password2 = self.cleaned_data.get('password1')
+        if password1 and password1 != password2:
+            raise forms.ValidationError("Passwords don't match")
+        return self.cleaned_data
+
     first_name      = forms.CharField(label="FIRST NAME", validators=valid_name)
     last_name       = forms.CharField(label="LAST NAME", validators=valid_name)
     email           = forms.EmailField(label="EMAIL", validators=valid_email)
-    password0       = forms.PasswordInput()
-    password1       = forms.PasswordInput()
-    is_married      = forms.BooleanField(label="HITCHED?", widget=forms.RadioSelect(choices=yes_no))
-    num_children    = forms.ChoiceField(label="HOW MANY KIDS DO YOU HAVE?",choices=[(x, x) for x in range(11)])
+    password0       = forms.CharField(widget=forms.PasswordInput(), label="PASSWORD")
+    password1       = forms.CharField(widget=forms.PasswordInput(), label="CONFIRM PASSWORD")
+    is_married      = forms.ChoiceField(label="HITCHED?", choices=[(0, 'NO'), (1, 'YES')])
+    num_kids        = forms.ChoiceField(label="HOW MANY KIDS DO YOU HAVE?",choices=[(x, x) for x in range(11)])
     profession      = forms.CharField(label="PROFESSION")
     current_city    = forms.CharField(label="CITY")
     current_state   = forms.CharField(label="STATE")
