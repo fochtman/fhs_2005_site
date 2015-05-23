@@ -97,8 +97,8 @@ USE_L10N = True
 
 USE_TZ = True
 
-LOGIN_URL = '/sign_in/'
-LOGOUT_URL = '/sign_out/'
+LOGIN_URL = '/login/'
+LOGOUT_URL = '/logout/'
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.7/howto/static-files/

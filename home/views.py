@@ -1,8 +1,6 @@
 from django.views.generic import TemplateView
 from django.http import HttpResponseRedirect
-from django.shortcuts import render
 from django.core.urlresolvers import reverse
-from django.contrib.auth.decorators import login_required
 
 from django.template import RequestContext
 from django.contrib import messages
@@ -18,7 +16,6 @@ from forms import *
 from models import FHSUser
 
 import stripe
-
 
 class HomeView(TemplateView):
     template_name = "home.html"
@@ -65,34 +62,15 @@ def register(request):
             current_city    = form.cleaned_data['current_city']
             current_state   = form.cleaned_data['current_state']
 
-            User.objects.create_user(username=username, password=password, email=email)
+            User.objects.create_user(first_name=first_name, last_name=last_name, username=username,
+                                     password=password, email=email)
             user = authenticate(username=username, password=password)
             login(request, user)
 
-            fhs_user = FHSUser(user=user, is_married=is_married, num_kids=num_kids, profession=profession, num_ticket=0, current_city=current_city, current_state=current_state)
+            fhs_user = FHSUser(user=user, is_married=is_married, num_kids=num_kids, profession=profession, num_ticket=0,
+                               current_city=current_city, current_state=current_state)
             fhs_user.save()
-            '''
-            username = form.cleaned_data['username']
-            email = form.cleaned_data['email']
-            password = form.cleaned_data['password']
-            User.objects.create_user(username=username, password=password, email=email)
-            user = authenticate(username=username, password=password)
-            login(request, user)
 
-            is_married = form.cleaned_data['is_married']
-            current_city = form.cleaned_data['current_city']
-            current_state = form.cleaned_data['current_state']
-
-            '''
-
-            '''
-            class FHSUser(models.Model):
-            user = models.OneToOneField(User)
-            is_married = models.BooleanField(default=False)
-            ticket_num = models.IntegerField(default=0)
-            current_city = models.CharField(max_length=50)
-            current_state = models.CharField(max_length=50)
-            '''
             messages.add_message(request, messages.SUCCESS, 'Your account was successfully created.')
             return HttpResponseRedirect('/')
         else:
@@ -103,15 +81,19 @@ def register(request):
         context = RequestContext(request, {'form': FHSUserRegistrationForm()})
         return render_to_response('register.html', context)
 
-def sign_in(request):
-    if request.user.is_authenticated():
-        return HttpResponseRedirect('/')
-    else:
-        if request.method == 'POST':
-            username = request.POST['username']
-            password = request.POST['password']
+'''
+def login(request):
+    if request.method == 'POST':
+        import sys
+        print >> sys.stderr, 'Goodbye, cruel world!'
+        #form = FHSUserSignInForm(request.POST)
+        form = FHSUserRegistrationForm(request.POST)
+        print >> sys.stderr, 'Hello, cruel world!'
+        if form.is_valid():
+            username = form.cleaned_data['email']
+            password = form.cleaned_data['password']
             user = authenticate(username=username, password=password)
-            if user is not None:
+            if user:
                 if user.is_active:
                     login(request, user)
                     if 'next' in request.GET:
@@ -121,39 +103,22 @@ def sign_in(request):
                 else:
                     messages.add_message(request, messages.ERROR, 'Your account is deactivated.')
                     context = RequestContext(request)
-                    return render_to_response('sign_in.html', context)
+                    return render_to_response('login.html', context)
             else:
                 messages.add_message(request, messages.ERROR, 'Username or password invalid.')
                 context = RequestContext(request)
-                return render_to_response('sign_in.html', context)
+                return render_to_response('login.html', context)
         else:
+            messages.add_message(request, messages.ERROR, 'Username or password invalid.')
             context = RequestContext(request)
-            return render_to_response('sign_in.html', context)
+            return render_to_response('login.html', context)
+    else:
+        context = RequestContext(request)
+        return render_to_response('login.html', context)
 
-
-def sign_out(request):
+def logout(request):
     logout(request)
     return HttpResponseRedirect('/')
-
-'''
-def sign_in(request):
-    username = request.POST['username']
-    password = request.POST['password']
-    user = authenticate(username=username, password=password)
-    if user is not None:
-        if user.is_active:
-            login(request, user)
-            #return a successful response
-        else:
-            # display some kind of error and try again
-    else:
-        # state that user doesn't exist
-        # redirect to sign-up page
-
-        # ...
-
-def sign_out(request):
-    logout(request)
 '''
 
 '''

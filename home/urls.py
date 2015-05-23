@@ -11,6 +11,6 @@ urlpatterns = patterns(
     url(r'^events/$', views.EventsView.as_view(), name='events'),
     url(r'^connect/$', views.ConnectView.as_view(), name='connect'),
     url(r'^register/$', views.register, name='register'),
-    url(r'^sign_in/$', views.sign_in, name='sign_in'),
-    url(r'^sign_out/$', views.sign_out, name='sign_out'),
+    url(r'^login/$', 'django.contrib.auth.views.login', {'template_name': 'login.html'}, name='login'),
+    url(r'^logout/$', 'django.contrib.auth.views.logout', {'template_name': 'logout.html'}, name='logout'),
 )

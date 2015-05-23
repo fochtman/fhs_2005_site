@@ -1,6 +1,5 @@
 from django import forms
 from django.core.exceptions import ValidationError
-from models import FHSUser
 from django.contrib.auth.models import User
 
 def is_name_forbidden(value):
@@ -28,29 +27,10 @@ def is_username_unique(value):
     if User.objects.filter(username__iexact=value).exists():
         raise ValidationError('That name is taken.')
 
-'''
-class RegistrationForm(forms.ModelForm):
-    password = forms.CharField(widget=forms.PasswordInput())
-    confirm_password = forms.CharField(widget=forms.PasswordInput(), label="Confirm your password")
-    email = forms.CharField(required=True)
-
-    class Meta:
-        model = User
-        exclude = ['last_login', 'date_joined']
-
-    def __init__(self, *args, **kwargs):
-        super(RegistrationForm, self).__init__(*args, **kwargs)
-        self.fields['username'].validators.append(is_username_forbidden)
-        self.fields['username'].validators.append(is_username_invalid)
-        self.fields['username'].validators.append(is_username_unique)
-        self.fields['email'].validators.append(is_email_unique)
-'''
-
 class FHSUserRegistrationForm(forms.Form):
-
-    yes_no      = [(True, 'yes'), (False, 'no')]
-    valid_name  = [is_name_forbidden, is_name_invalid]
+    valid_name = [is_name_forbidden, is_name_invalid]
     valid_email = [is_email_unique]
+    yes_no = [(True, 'yes'), (False, 'no')]
 
     def clean(self):
         password1 = self.cleaned_data.get('password0')
@@ -65,8 +45,18 @@ class FHSUserRegistrationForm(forms.Form):
     password0       = forms.CharField(widget=forms.PasswordInput(), label="PASSWORD")
     password1       = forms.CharField(widget=forms.PasswordInput(), label="CONFIRM PASSWORD")
     is_married      = forms.ChoiceField(label="HITCHED?", choices=[(0, 'NO'), (1, 'YES')])
-    num_kids        = forms.ChoiceField(label="HOW MANY KIDS DO YOU HAVE?",choices=[(x, x) for x in range(11)])
+    num_kids        = forms.ChoiceField(label="HOW MANY KIDS DO YOU HAVE?", choices=[(x, x) for x in range(11)])
     profession      = forms.CharField(label="PROFESSION")
     current_city    = forms.CharField(label="CITY")
     current_state   = forms.CharField(label="STATE")
     #ticket_num = models.IntegerField(default=0)
+
+
+'''
+class FHSUserSignInForm(forms.Form):
+    import sys
+    print >> sys.stderr, 'In user sign-in'
+
+    username = forms.EmailField(label="USERNAME/EMAIL", validators=valid_email)
+    password = forms.CharField(widget=forms.PasswordInput(), label="PASSWORD")
+'''

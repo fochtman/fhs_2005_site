@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+
+{% block login %}
+<link href="{% static 'css/auth.css' %}" rel="stylesheet">
+<div class="content-section-a">
+    <form action="{% url 'home:login' %}" method="POST">
+        <div class="container">
+            <div class="row">
+                <h2>LOGIN</h2>
+                <br>
+                <div class="col-md-12 ">
+                    {% csrf_token %}
+                    <p>
+                        <label for="id_username">EMAIL</label>
+                        <br>
+                        {{ form.username }}
+                    </p>
+                    <p>
+                        <label for="id_password">PASSWORD</label>
+                        <br>
+                        {{ form.password }}
+                    </p>
+
+                    <button type="submit" class="btn btn-success btn-large"> SUBMIT </button>
+                    <br>
+                    <br>
+                    OR
+                    <br>
+                    <br>
+                    <a class="btn btn-primary" href="{% url 'home:register' %}" > REGISTER </a>
+                    <input type="hidden" name="next" value="{{ next }}" />
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+{% endblock login %}
+
+
