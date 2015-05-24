@@ -1,21 +1,16 @@
 from django.views.generic import TemplateView
 from django.http import HttpResponseRedirect
 from django.core.urlresolvers import reverse
-
 from django.template import RequestContext
-from django.contrib import messages
 from django.shortcuts import render_to_response
-
-from django.contrib.auth import logout
-from django.contrib.auth import authenticate, login
-
+from django.contrib.auth import login, logout, authenticate
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.models import User
 from django.utils.decorators import method_decorator
-
 from forms import *
 from models import FHSUser
-
 import stripe
+
 
 class HomeView(TemplateView):
     template_name = "home.html"
@@ -32,6 +27,7 @@ class ShopView(TemplateView):
     def dispatch(self, *args, **kwargs):
         return super(ShopView, self).dispatch(*args, **kwargs)
 
+
 class ConnectView(TemplateView):
     template_name = "connect.html"
 
@@ -47,156 +43,84 @@ class SponsorsView(TemplateView):
 class SuccessView(TemplateView):
     template_name = "success.html"
 
+class DeclineView(TemplateView):
+    template_name = "decline.html"
+
+def register_render(request, form0):
+    context = RequestContext(request, {'form': form0})
+    return render_to_response('register.html', context)
+
 def register(request):
     if request.method == 'POST':
         form = FHSUserRegistrationForm(request.POST)
         if form.is_valid():
-            first_name      = form.cleaned_data['first_name']
-            last_name       = form.cleaned_data['last_name']
-            email           = form.cleaned_data['email']
-            password        = form.cleaned_data['password0']
-            username        = email
-            is_married      = True if form.cleaned_data['is_married'] == 'YES' else False
-            num_kids        = int(form.cleaned_data['num_kids'])
-            profession      = form.cleaned_data['profession']
-            current_city    = form.cleaned_data['current_city']
-            current_state   = form.cleaned_data['current_state']
+            first_name = form.cleaned_data['first_name']
+            last_name = form.cleaned_data['last_name']
+            email = form.cleaned_data['email']
+            password = form.cleaned_data['password0']
+            username = email
+            is_married = True if form.cleaned_data['is_married'] == 'YES' else False
+            num_kids = int(form.cleaned_data['num_kids'])
+            profession = form.cleaned_data['profession']
+            current_city = form.cleaned_data['current_city']
+            current_state = form.cleaned_data['current_state']
 
-            User.objects.create_user(first_name=first_name, last_name=last_name, username=username,
-                                     password=password, email=email)
+            User.objects.create_user(first_name=first_name,
+                                     last_name=last_name,
+                                     username=username,
+                                     password=password,
+                                     email=email)
+
             user = authenticate(username=username, password=password)
             login(request, user)
 
-            fhs_user = FHSUser(user=user, is_married=is_married, num_kids=num_kids, profession=profession, num_ticket=0,
-                               current_city=current_city, current_state=current_state)
+            fhs_user = FHSUser(user=user,
+                               is_married=is_married,
+                               num_kids=num_kids,
+                               profession=profession,
+                               num_ticket=0,
+                               current_city=current_city,
+                               current_state=current_state)
             fhs_user.save()
 
-            messages.add_message(request, messages.SUCCESS, 'Your account was successfully created.')
+            # Always return an HttpResponseRedirect after successfully dealing
+            # with POST data. This prevents data from being posted twice if a
+            # user hits the Back button.
             return HttpResponseRedirect('/')
         else:
-            messages.add_message(request, messages.ERROR, 'There was an error while creating account.')
-            context = RequestContext(request, {'form': form})
-            return render_to_response('register.html', context)
+            return register_render(request, form)
     else:
-        context = RequestContext(request, {'form': FHSUserRegistrationForm()})
-        return render_to_response('register.html', context)
+        return register_render(request, FHSUserRegistrationForm())
 
-'''
-def login(request):
-    if request.method == 'POST':
-        import sys
-        print >> sys.stderr, 'Goodbye, cruel world!'
-        #form = FHSUserSignInForm(request.POST)
-        form = FHSUserRegistrationForm(request.POST)
-        print >> sys.stderr, 'Hello, cruel world!'
-        if form.is_valid():
-            username = form.cleaned_data['email']
-            password = form.cleaned_data['password']
-            user = authenticate(username=username, password=password)
-            if user:
-                if user.is_active:
-                    login(request, user)
-                    if 'next' in request.GET:
-                        return HttpResponseRedirect(request.GET['next'])
-                    else:
-                        return HttpResponseRedirect('/')
-                else:
-                    messages.add_message(request, messages.ERROR, 'Your account is deactivated.')
-                    context = RequestContext(request)
-                    return render_to_response('login.html', context)
-            else:
-                messages.add_message(request, messages.ERROR, 'Username or password invalid.')
-                context = RequestContext(request)
-                return render_to_response('login.html', context)
-        else:
-            messages.add_message(request, messages.ERROR, 'Username or password invalid.')
-            context = RequestContext(request)
-            return render_to_response('login.html', context)
-    else:
-        context = RequestContext(request)
-        return render_to_response('login.html', context)
 
-def logout(request):
+def logout_view(request):
     logout(request)
     return HttpResponseRedirect('/')
-'''
-
-'''
-def charge(request, question_id):
-    p = get_object_or_404(Question, pk=question_id)
-    try:
-        selected_choice = p.choice_set.get(pk=request.POST['choice'])
-    except (KeyError, Choice.DoesNotExist):
-        # Redisplay the question voting form.
-        return render(request, 'polls/detail.html', {
-            'question': p,
-            'error_message': "You didn't select a choice.",
-        })
-    else:
-        selected_choice.votes += 1
-        selected_choice.save()
-        # Always return an HttpResponseRedirect after successfully dealing
-        # with POST data. This prevents data from being posted twice if a
-        # user hits the Back button.
-        return HttpResponseRedirect(reverse('polls:results', args=(p.id,)))
-'''
-
-# eventually add product and cust. info returned in the form,
-# which will require adding models
-
 
 def charge(request):
-    '''
-    print 'values'
-    print request.POST.values()
-    print 'keys'
-    print request.POST.keys()
-    '''
-
-    meta = {}
-
-    num_tickets = 'Number of tickets'
-    meta[num_tickets] = request.POST['tk0']
-
-    num_ts0 = 'Number of ts0'
-    meta[num_ts0] = int(request.POST['ts0'])
-
-    if meta[num_ts0] > 0:
-        tso_size = 'ts0_size'
-        meta[tso_size] = request.POST[tso_size]
-
-    amount = int(request.POST['oTotal']) * 100
-
-    # print meta
-    # customer=customer.id,
-    # TODO: send email receipt
-
-    token = request.POST['stripeToken']
-
-    if amount > 0:
-        try:
-            charge = stripe.Charge.create(
-                amount=amount,
-                currency='usd',
-                source=token,
-                description="Reunion Purchase",
-                metadata=meta
-            )
-        except stripe.CardError, e:
-            # the card has been declined
-            # redisplay shopping page with js alert or something
-            # return render(request, 'home/shop.html', {
-            #   'error_msg' : ...
-            # })
-            pass
+    user = request.user
+    if user.is_authenticated():
+        fhs_user = FHSUser.objects.get(pk=user)
+        amount = int(request.POST['oTotal']) * 100
+        token = request.POST['stripeToken']
+        if amount > 0:
+            try:
+                charge = stripe.Charge.create(
+                    amount=amount,
+                    currency='usd',
+                    source=token,
+                    description="Reunion Purchase",
+                )
+                fhs_user.num_ticket += 1
+                fhs_user.save()
+                # TODO: send email receipt
+            except stripe.CardError, e:
+                return HttpResponseRedirect(reverse('home:decline'))
+            else:
+                return HttpResponseRedirect(reverse('home:success'))
         else:
-            # logs = {'ok': True}
-            # url = reverse('notamember', kwargs={'classname': classname})
-            # return HttpResponseRedirect(url)
-            # url = reverse('home:shop', kwargs={'ok': True})
-            # return HttpResponseRedirect(url)
-            # return render(request, 'home:shop', logs)
-            # return render(reverse('home:success', logs))
+            # amount to charge <= 0
+            # return HttpResponseRedirect()
+            return HttpResponseRedirect(reverse('home:decline'))
 
-            return HttpResponseRedirect(reverse('home:success'))
 

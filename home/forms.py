@@ -49,14 +49,4 @@ class FHSUserRegistrationForm(forms.Form):
     profession      = forms.CharField(label="PROFESSION")
     current_city    = forms.CharField(label="CITY")
     current_state   = forms.CharField(label="STATE")
-    #ticket_num = models.IntegerField(default=0)
 
-
-'''
-class FHSUserSignInForm(forms.Form):
-    import sys
-    print >> sys.stderr, 'In user sign-in'
-
-    username = forms.EmailField(label="USERNAME/EMAIL", validators=valid_email)
-    password = forms.CharField(widget=forms.PasswordInput(), label="PASSWORD")
-'''

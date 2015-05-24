@@ -1,3 +1,7 @@
 from django.contrib import admin
+from models import FHSUser
 
-# Register your models here.
+#class FHSUserAdmin(admin.ModelAdmin):
+#admin.site.register(FHSUser, FHSUserAdmin)
+
+admin.site.register(FHSUser)

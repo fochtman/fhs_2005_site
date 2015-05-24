@@ -35,6 +35,14 @@ body {
     padding-bottom: 2%;
 }
 
+#tmpx.content-section-a {
+    align-content: center;
+}
+
+.container-shop {
+    align-content: center;
+}
+
 .container-a .navbar-collapse {
     padding-right: 64px;
 }

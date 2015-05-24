@@ -6,6 +6,9 @@
 {% block success %}
 {% endblock %}
 
+{% block carddeclined %}
+{% endblock %}
+
 <!-- TODO add customer info and product id stuff, e.g. set up models -->
 <!-- <form action="{% url 'home:charge' customer_info, product.id, method="POST"> -->
 <!-- see to use pub-key from settings.py see
@@ -45,12 +48,12 @@ data-shippingAddress="true"
                             <br>
                             <img src="{% static 'img/ticket.png' %}" alt="...">
                             <div class="caption">
-                                <h2>$ 30</h2>
+                                <h2>$ 40</h2> <!-- LINK DISPLAYED and DEC/INC PRICE -->
                             </div>
                             <h4>
                                 <label>QTY.</label>
-                                <button type="button" onclick="deltaFunc('tk0', inc, 30)" class="glyphicon glyphicon-chevron-up">   </button>
-                                <button type="button" onclick="deltaFunc('tk0', dec, 30)" class="glyphicon glyphicon-chevron-down"> </button>
+                                <button type="button" onclick="deltaFunc('tk0', inc, 40)" class="glyphicon glyphicon-chevron-up">   </button>
+                                <button type="button" onclick="deltaFunc('tk0', dec, 40)" class="glyphicon glyphicon-chevron-down"> </button>
                                 <input type="number" name="tk0" id="tk0" value="0" readonly size="2">
                             </h4>
                         </div>
@@ -60,57 +63,61 @@ data-shippingAddress="true"
                     <div class="container-shop">
                         <div class="thumbnail">
                             <br>
-                            <img src="{% static 'img/t-shirt.png' %}" alt="...">
-                            <div class="caption">
-                                <h2>$ 20</h2>
-                            </div>
-                            <h4>
-                                <label>QTY.</label>
-                                <button type="button" onclick="deltaFunc('ts0', inc, 20)" class="glyphicon glyphicon-chevron-up">   </button>
-                                <button type="button" onclick="deltaFunc('ts0', dec, 20)" class="glyphicon glyphicon-chevron-down"> </button>
-                                <input type="number" name="ts0" id="ts0" value="0" readonly size="2">
-                            </h4>
-                            <div class="btn-group-a" data-toggle="buttons">
-                                <label class="btn t-size">
-                                    <input type="radio" name="ts0_size" id="option1" value="S"> S
+                            <br>
+                            <h2>
+                                <label>$
+                                    <input type="number" name="oTotal" id="oTotal" value="0" readonly size="4">
                                 </label>
-                                <label class="btn t-size active">
-                                    <input type="radio" name="ts0_size" id="option2" value="M" checked> M
-                                </label>
-                                <label class="btn t-size">
-                                    <input type="radio" name="ts0_size" id="option3" value="L"> L
-                                </label>
-                                <label class="btn t-size">
-                                    <input type="radio" name="ts0_size" id="option4" value="XL"> XL
-                                </label>
-                            </div>
+                                <script
+                                        src="https://checkout.stripe.com/checkout.js" class="stripe-button"
+                                        data-key='pk_test_DzIRKmpdtA3YO5RqZvrAhahB'
+                                        data-name="fhs2005.org"
+                                        data-description="Ticket(s)"
+                                        data-image="{% static 'img/fhsLogo1.png' %}"
+                                        data-zip-code="true"
+                                        data-notrack>
+                                </script>
+                            </h2>
                         </div>
                     </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-md-12 text-center">
-                    <br>
-                    <br>
-                    <h2>
-                        <label>$
-                            <input type="number" name="oTotal" id="oTotal" value="0" readonly size="4">
-                        </label>
-                        <script
-                                src="https://checkout.stripe.com/checkout.js" class="stripe-button"
-                                data-key="pk_test_7gQww1UajKTpmBrT5amJxAuv"
-                                data-name="fhs2005.org"
-                                data-description="T-Shirt"
-                                data-image="{% static 'img/fhsLogo1.png' %}"
-                                data-zip-code="true"
-                                data-billingAddress="true"
-                                data-shippingAddress="true"
-                                data-notrack>
-                        </script>
-                    </h2>
                 </div>
             </div>
         </div>
     </form>
 </div>
 {% endblock %}
+<!--
+                                        <!--data-billingAddress="true"
+                                        data-shippingAddress="true"
+<div class="col-md-6 text-center">
+    <div class="container-shop">
+        <div class="thumbnail">
+            <br>
+            <img src="{% static 'img/t-shirt.png' %}" alt="...">
+            <div class="caption">
+                <h2>$ 20</h2>
+            </div>
+            <h4>
+                <label>QTY.</label>
+                <button type="button" onclick="deltaFunc('ts0', inc, 20)" class="glyphicon glyphicon-chevron-up">   </button>
+                <button type="button" onclick="deltaFunc('ts0', dec, 20)" class="glyphicon glyphicon-chevron-down"> </button>
+                <input type="number" name="ts0" id="ts0" value="0" readonly size="2">
+            </h4>
+            <div class="btn-group-a" data-toggle="buttons">
+                <label class="btn t-size">
+                    <input type="radio" name="ts0_size" id="option1" value="S"> S
+                </label>
+                <label class="btn t-size active">
+                    <input type="radio" name="ts0_size" id="option2" value="M" checked> M
+                </label>
+                <label class="btn t-size">
+                    <input type="radio" name="ts0_size" id="option3" value="L"> L
+                </label>
+                <label class="btn t-size">
+                    <input type="radio" name="ts0_size" id="option4" value="XL"> XL
+                </label>
+            </div>
+        </div>
+    </div>
+</div>
+-->

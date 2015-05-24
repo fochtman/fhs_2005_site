@@ -18,10 +18,9 @@ BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = '72nc_&p02iapz#$bqbf$^l-+38%cah6xxj3-4u-@e326g1v=5e'
-
 stripe_keys = {
-    'secret_key': 'sk_test_3zZEv8vtUlsp86IQ258OBsuz',
-    'publishable_key': 'pk_test_7gQww1UajKTpmBrT5amJxAuv'
+    'secret_key': 'sk_test_uAIKHtxP2MuzSvdYsJ6rH8Ag',
+    'publishable_key': 'pk_test_DzIRKmpdtA3YO5RqZvrAhahB'
 }
 import stripe
 stripe.api_key = stripe_keys['secret_key']
@@ -77,12 +76,12 @@ DATABASES = {
     }
 }
 
-#DATABASES = {
-#    'default': {
-#        'ENGINE': 'django.db.backends.sqlite3',
-#        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-#    }
-#}
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+#     }
+# }
 
 # Internationalization
 # https://docs.djangoproject.com/en/1.7/topics/i18n/
@@ -99,6 +98,7 @@ USE_TZ = True
 
 LOGIN_URL = '/login/'
 LOGOUT_URL = '/logout/'
+LOGIN_REDIRECT_URL = '/'
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.7/howto/static-files/

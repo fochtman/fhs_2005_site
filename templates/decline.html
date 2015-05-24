@@ -1,7 +1,7 @@
 {% extends "shop.html" %}
 {% load staticfiles %}
 
-{% block success %}
+{% block carddeclined %}
 
 <script type="text/javascript">
     $(window).load(function(){
@@ -13,22 +13,21 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <a href="{% url 'home:home' %}" class="btn btn-info close"> &times; </a>
-                <h4 class="modal-title" id="myModalLabel">SUCCESS!</h4>
+                <a href="{% url 'home:shop' %}" class="btn btn-info close"> &times; </a>
+                <h4 class="modal-title" id="myModalLabel">CARD DECLINED</h4>
             </div>
+            <!--
             <div class="modal-body">
-                <!--TODO: send email receipt-->
+                <!--TODO: send email receipt
                 Thank you for making your purchase.
                 <ul>
                     <li> Please check your email address for your receipt.             </li>
                     <li> Purchase history + valid ID will act as your ticket to the reunion events. </li>
-                    <!--<li> Your purchases will be shipped to you in 3 - 5 business days. </li>-->
                 </ul>
             </div>
+            -->
         </div>
     </div>
 </div>
 
 {% endblock %}
-
-
