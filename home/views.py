@@ -109,7 +109,8 @@ def charge(request):
                     amount=amount,
                     currency='usd',
                     source=token,
-                    description="Reunion Purchase",
+                    description="Reunion Ticket",
+                    receipt_email=fhs_user.user.email,
                 )
                 fhs_user.num_ticket += 1
                 fhs_user.save()
