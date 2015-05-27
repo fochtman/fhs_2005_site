@@ -1,6 +1,7 @@
 from django import forms
 from django.core.exceptions import ValidationError
 from django.contrib.auth.models import User
+from django.conf import settings
 
 def is_name_forbidden(value):
     forbidden_names = ['admin', 'settings', 'news', 'about', 'help', 'signin', 'signup',
@@ -27,6 +28,10 @@ def is_username_unique(value):
     if User.objects.filter(username__iexact=value).exists():
         raise ValidationError('That name is taken.')
 
+def is_bulldog_id(value):
+    if value != settings.BULL_DOG_ID:
+        raise ValidationError('Incorrect ID.')
+
 class FHSUserRegistrationForm(forms.Form):
     valid_name = [is_name_forbidden, is_name_invalid]
     valid_email = [is_email_unique]
@@ -41,12 +46,14 @@ class FHSUserRegistrationForm(forms.Form):
 
     first_name      = forms.CharField(label="FIRST NAME", validators=valid_name)
     last_name       = forms.CharField(label="LAST NAME", validators=valid_name)
+    maiden_name     = forms.CharField(label="MAIDEN NAME", validators=valid_name)
     email           = forms.EmailField(label="EMAIL", validators=valid_email)
     password0       = forms.CharField(widget=forms.PasswordInput(), label="PASSWORD")
     password1       = forms.CharField(widget=forms.PasswordInput(), label="CONFIRM PASSWORD")
     is_married      = forms.ChoiceField(label="HITCHED?", choices=[(0, 'NO'), (1, 'YES')])
     num_kids        = forms.ChoiceField(label="HOW MANY KIDS DO YOU HAVE?", choices=[(x, x) for x in range(11)])
-    profession      = forms.CharField(label="PROFESSION")
-    current_city    = forms.CharField(label="CITY")
-    current_state   = forms.CharField(label="STATE")
+    profession      = forms.CharField(label="PROFESSION", min_length=3, validators=[is_name_invalid])
+    current_city    = forms.CharField(label="CITY", min_length=2, validators=[is_name_invalid])
+    current_state   = forms.CharField(label="STATE", min_length=2, validators=[is_name_invalid])
+    verification    = forms.CharField(label="BULL DOG ID", min_length=10, max_length=10, validators=[is_bulldog_id])
 
