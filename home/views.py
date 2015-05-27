@@ -5,15 +5,24 @@ from django.template import RequestContext
 from django.shortcuts import render_to_response
 from django.contrib.auth import login, logout, authenticate
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth.models import User
 from django.utils.decorators import method_decorator
 from forms import *
-from models import FHSUser
+from models import FHSUser, Image
+from .forms import ImageForm
+from .models import Image
+from django.views.generic import FormView, DetailView, ListView
 import stripe
 
 
 class HomeView(TemplateView):
     template_name = "home.html"
+
+
+#from django.shortcuts import render
+#def home(request):
+#    all_images = Image.objects.all()
+#    context = {'all_images': all_images}
+#    return render(request, 'home.html', context)
 
 
 class EventsView(TemplateView):
@@ -28,12 +37,6 @@ class ShopView(TemplateView):
         return super(ShopView, self).dispatch(*args, **kwargs)
 
 
-class ConnectView(TemplateView):
-    template_name = "connect.html"
-
-    @method_decorator(login_required)
-    def dispatch(self, *args, **kwargs):
-        return super(ConnectView, self).dispatch(*args, **kwargs)
 
 
 class SponsorsView(TemplateView):
@@ -125,3 +128,33 @@ def charge(request):
             return HttpResponseRedirect(reverse('home:decline'))
 
 
+class ConnectUploadImage(FormView):
+    template_name = 'connect.html'
+    form_class = ImageForm
+
+    @method_decorator(login_required)
+    def dispatch(self, *args, **kwargs):
+        return super(ConnectUploadImage, self).dispatch(*args, **kwargs)
+
+    def form_valid(self, form):
+        image = Image(image=self.get_form_kwargs().get('files')['image'])
+        image.save()
+        self.id = image.id
+        return HttpResponseRedirect(reverse('home:connect'))
+
+    def get_success_url(self):
+        return reverse('image', kwargs={'pk': self.id})
+
+'''
+class ImageDetailView(DetailView):
+    model = Image
+    template_name = 'image.html'
+    context_object_name = 'image'
+
+
+class ImageIndexView(ListView):
+    model = Image
+    template_name = 'image_view.html'
+    context_object_name = 'images'
+    queryset = Image.objects.all()
+'''

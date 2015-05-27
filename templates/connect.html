@@ -1,10 +1,39 @@
 {% extends "base.html" %}
 {% load staticfiles %}
 
-{% block shop %}
+{% block connect %}
 <br>
 <br>
 <br>
-<br>
-<h1>UNDER CONSTRUCTION YO!</h1>
+<link href="{% static 'css/auth.css' %}" rel="stylesheet">
+<div class="content-section-a">
+    <form action="{% url 'home:connect' %}" method="post" enctype="multipart/form-data">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-2 "> </div>
+                <div class="col-md-6 ">
+                    <div class="row">
+                        <h2>UPLOAD AN IMAGE OR TWO</h2>
+                        <div class="col-md-12 ">
+                            {% csrf_token %}
+                            {% for field in form %}
+                            <div class="fieldWrapper">
+                                {{ field.errors }}
+                                <br>
+                                {{ field }}
+                            </div>
+                            <br>
+                            {% endfor %}
+                            <br>
+                            <!--{# form.as_p #}-->
+                            <button type="submit" class="btn btn-success btn-large">
+                                SUBMIT
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
 {% endblock %}

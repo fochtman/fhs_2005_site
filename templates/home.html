@@ -3,6 +3,27 @@
 
 {% block home  %}
 
+<!--
+TODO FIX THIS https://godjango.com/35-upload-files/
+{# if all_images #}
+<div class="container">
+    <br>
+    <div id="myCarousel" class="carousel slide" data-ride="carousel">
+        <div class="carousel-inner" role="listbox">
+            {# for image in all_images #}
+                <div class="item active">
+                    <p>{{MEDIA_URL}}{{image}}</p>
+                    <img src="{{MEDIA_URL}}{{image.url}}">
+                    <img src="{{ image.url }}">
+                    <img src="{{ image.url }}" class="img-responsive" width="460" height="345">
+                </div>
+            {# endfor #}
+        </div>
+    </div>
+</div>
+{# endif #}
+-->
+
 <br>
 
 <div class="content-section-a">

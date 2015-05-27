@@ -1,5 +1,7 @@
 from django.conf.urls import patterns, url
+from django.conf import settings
 from home import views
+from django.conf.urls.static import static
 
 urlpatterns = patterns(
     '',
@@ -10,8 +12,8 @@ urlpatterns = patterns(
     url(r'^shop/$', views.ShopView.as_view(), name='shop'),
     url(r'^sponsors/$', views.SponsorsView.as_view(), name='sponsors'),
     url(r'^events/$', views.EventsView.as_view(), name='events'),
-    url(r'^connect/$', views.ConnectView.as_view(), name='connect'),
     url(r'^register/$', views.register, name='register'),
     url(r'^login/$', 'django.contrib.auth.views.login', {'template_name': 'login.html', 'redirect_field_name': 'home.html'}, name='login'),
     url(r'^logout/$', views.logout_view, name='logout'),
-)
+    url(r'^connect/$', views.ConnectUploadImage.as_view(), name='connect'),
+) + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

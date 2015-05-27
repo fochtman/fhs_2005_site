@@ -167,3 +167,11 @@ a:link      { color: white;     /*titaniumwhite */}
 a:visited   { color: #FCFFF0;   /*titaniumwhite */}
 a:hover     { color: gray;      /*seurat blue   */}
 a:active    { color: #FCFFF0;   /*titaniumwhite */}
+
+/*
+.carousel-inner > .item > img,
+.carousel-inner > .item > a > img {
+  width: 70%;
+  margin: auto;
+}
+*/

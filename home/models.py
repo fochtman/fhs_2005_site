@@ -12,3 +12,7 @@ class FHSUser(models.Model):
 
     def __unicode__(self):
         return '{0}, {1}'.format(self.user.last_name, self.user.first_name)
+
+
+class Image(models.Model):
+    image = models.ImageField(upload_to='images')
