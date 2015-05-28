@@ -127,10 +127,14 @@ def charge(request):
             # return HttpResponseRedirect()
             return HttpResponseRedirect(reverse('home:decline'))
 
+from django.contrib import messages
+#from django.contrib.messages.views import SuccessMessageMixin
+#class ConnectUploadImage(SuccessMessageMixin, FormView):
 
 class ConnectUploadImage(FormView):
     template_name = 'connect.html'
     form_class = ImageForm
+    #success_message = "SUCCESS!"
 
     @method_decorator(login_required)
     def dispatch(self, *args, **kwargs):

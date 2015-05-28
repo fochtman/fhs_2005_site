@@ -55,7 +55,7 @@ class FHSUserRegistrationForm(forms.Form):
     profession      = forms.CharField(label="PROFESSION", min_length=3, validators=[is_name_invalid])
     current_city    = forms.CharField(label="CITY", min_length=2, validators=[is_name_invalid])
     current_state   = forms.CharField(label="STATE", min_length=2, validators=[is_name_invalid])
-    verification    = forms.CharField(label="BULL DOG ID", min_length=10, max_length=10, validators=[is_bulldog_id])
+    #verification    = forms.CharField(label="BULL DOG ID", min_length=10, max_length=10, validators=[is_bulldog_id])
 
 class ImageForm(forms.Form):
     image = forms.ImageField('UPLOAD IMAGE')
