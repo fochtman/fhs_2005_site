@@ -37,53 +37,53 @@ data-shippingAddress="true"
     }
 </script>
 
-<div class="content-section-a" id="tmpx">
-    <form action="{% url 'home:charge' %}" method="POST">
-        {% csrf_token %}
-        <div class="container">
+<!--<div class="content-section-a" id="tmpx">-->
+<form action="{% url 'home:charge' %}" method="POST">
+    {% csrf_token %}
+    <div class="container">
+        <div class="jumbotron">
             <div class="row">
-                <div class="col-md-6 text-center">
+                <div class="col-md-12 text-center">
                     <div class="container-shop">
-                        <div class="thumbnail">
-                            <br>
-                            <img src="{% static 'img/ticket.png' %}" alt="...">
-                            <div class="caption">
-                                <h2>$ 40</h2> <!-- LINK DISPLAYED and DEC/INC PRICE -->
-                            </div>
-                            <h4>
-                                <label>QTY.</label>
-                                <button type="button" onclick="deltaFunc('tk0', inc, 40)" class="glyphicon glyphicon-chevron-up">   </button>
-                                <button type="button" onclick="deltaFunc('tk0', dec, 40)" class="glyphicon glyphicon-chevron-down"> </button>
-                                <input type="number" name="tk0" id="tk0" value="0" readonly size="2">
-                            </h4>
+                        <div class="caption">
+                            <h2>PRICE $ 40</h2> <!-- LINK DISPLAYED and DEC/INC PRICE -->
                         </div>
+                        <br>
+                        <br>
+                        <img src="{% static 'img/ticket.png' %}" alt="...">
+                        <br>
+                        <br>
+                        <h2>
+                            <button type="button" onclick="deltaFunc('tk0', inc, 40)" class="glyphicon glyphicon-chevron-up">   </button>
+                            <button type="button" onclick="deltaFunc('tk0', dec, 40)" class="glyphicon glyphicon-chevron-down"> </button>
+                            <input type="number" name="tk0" id="tk0" value="0" readonly size="2">
+                        </h2>
                     </div>
                 </div>
-                <div class="col-md-6 text-center">
+            </div>
+            <div class="row">
+                <div class="col-md-12 text-center">
                     <div class="container-shop">
-                        <div class="thumbnail">
-                            <br>
-                            <br>
-                            <h2>
-                                <label>$
-                                    <input type="number" name="oTotal" id="oTotal" value="0" readonly size="4">
-                                </label>
-                                <script
-                                        src="https://checkout.stripe.com/checkout.js" class="stripe-button"
-                                        data-key= {{ stripe_p_key }}
-                                        data-name="fhs2005.org"
-                                        data-description="Ticket(s)"
-                                        data-image="{% static 'img/fhsLogo1.png' %}"
-                                        data-zip-code="true"
-                                        data-notrack>
-                                </script>
-                            </h2>
-                        </div>
+                        <h2>
+                            TOTAL $ <input type="number" name="oTotal" id="oTotal" value="0" readonly size="4">
+                        </h2>
+                        <br>
+                        <script
+                            src="https://checkout.stripe.com/checkout.js" class="stripe-button"
+                            data-key= {{ stripe_p_key }}
+                            data-name="fhs2005.org"
+                            data-description="Ticket(s)"
+                            data-image="{% static 'img/fhsLogo1.png' %}"
+                            data-zip-code="true"
+                            data-notrack>
+                        </script>
+                        <br>
                     </div>
                 </div>
             </div>
         </div>
-    </form>
+    </div>
+</form>
 </div>
 {% endblock %}
 <!--
