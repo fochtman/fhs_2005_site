@@ -117,6 +117,7 @@ input[type=button] {
 .navbar {
 	min-height: 70px;
 	padding-top: 24px;
+	padding-bottom: 24px;
 	margin-bottom: 0px;
 }
 

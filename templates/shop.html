@@ -9,18 +9,6 @@
 {% block carddeclined %}
 {% endblock %}
 
-<!-- TODO add customer info and product id stuff, e.g. set up models -->
-<!-- <form action="{% url 'home:charge' customer_info, product.id, method="POST"> -->
-<!-- see to use pub-key from settings.py see
-<script src="https://checkout.stripe.com/checkout.js"></script>
-http://stackoverflow.com/questions/433162/can-i-access-constants-in-settings-py-from-templates-in-django
-data-billingAddress="true"
-data-shippingAddress="true"
--->
-<br>
-<br>
-<br>
-<br>
 
 <script>
     function dec(v, x) { return v - x; }
@@ -37,6 +25,9 @@ data-shippingAddress="true"
     }
 </script>
 
+<br>
+<br>
+<br>
 <!--<div class="content-section-a" id="tmpx">-->
 <form action="{% url 'home:charge' %}" method="POST">
     {% csrf_token %}

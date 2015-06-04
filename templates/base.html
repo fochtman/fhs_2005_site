@@ -43,14 +43,22 @@
                     <li> <a href="{% url 'home:events'   %}">EVENTS   </a></li>
                     <li> <a href="{% url 'home:shop'     %}">TICKETS  </a></li>
                     <li> <a href="{% url 'home:sponsors' %}">SPONSORS </a></li>
-                    <li> <a href="{% url 'home:login'    %}">LOGIN    </a></li>
-                    <li> <a href="{% url 'home:logout'   %}">LOGOUT   </a></li>
+                    {% if user.is_authenticated %}
+                        <li> <a href="{% url 'home:logout'   %}">LOGOUT   </a></li>
+                    {% else %}
+                        <li> <a href="{% url 'home:login'    %}">LOGIN    </a></li>
+                    {% endif %}
                 </ul>
             </div>
         </div>
     </div>
 </div>
-<div id="headerwrap"></div><!-- /headerwrap -->
+<br>
+<br>
+<br>
+<br>
+<br>
+<!--<div id="headerwrap"></div><!-- /headerwrap -->
 {% endblock %}
 
 {% block home %}
