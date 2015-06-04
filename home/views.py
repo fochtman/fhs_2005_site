@@ -6,13 +6,11 @@ from django.shortcuts import render_to_response
 from django.contrib.auth import login, logout, authenticate
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
-from forms import *
-from models import FHSUser, Image
-from .forms import ImageForm
+from .forms import *
+from .models import FHSUser
 from .models import Image
-from django.views.generic import FormView, DetailView, ListView
+from django.views.generic import FormView
 import stripe
-
 
 class HomeView(TemplateView):
     template_name = "home.html"
@@ -36,7 +34,10 @@ class ShopView(TemplateView):
     def dispatch(self, *args, **kwargs):
         return super(ShopView, self).dispatch(*args, **kwargs)
 
-
+    def get_context_data(self, **kwargs):
+        context = super(ShopView, self).get_context_data(**kwargs)
+        context['stripe_p_key'] = settings.STRIPE_P_KEY
+        return context
 
 
 class SponsorsView(TemplateView):
