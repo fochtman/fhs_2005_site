@@ -3,7 +3,8 @@ from django.http import HttpResponseRedirect
 from django.core.urlresolvers import reverse
 from django.template import RequestContext
 from django.shortcuts import render_to_response
-from django.contrib.auth import login, logout, authenticate
+#from django.contrib.auth import login, logout, authenticate
+from django.contrib.auth import authenticate
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
 from .forms import *
@@ -55,6 +56,7 @@ def register_render(request, form0):
     return render_to_response('register.html', context)
 
 def register(request):
+    from django.contrib.auth import authenticate, login
     if request.method == 'POST':
         form = FHSUserRegistrationForm(request.POST)
         if form.is_valid():
@@ -96,8 +98,21 @@ def register(request):
     else:
         return register_render(request, FHSUserRegistrationForm())
 
+def login_view(request):
+    from django.contrib.auth import login
+    form = FHSUserLoginForm(request.POST or None)
+    if request.POST and form.is_valid():
+        user = form.fhs_user_login(request)
+        if user:
+            login(request, user)
+            return HttpResponseRedirect("/")
+
+    context = RequestContext(request, {'form': form})
+    return render_to_response('login.html', context)
+    #return render(request, )
 
 def logout_view(request):
+    from django.contrib.auth import logout
     logout(request)
     return HttpResponseRedirect('/')
 

@@ -57,5 +57,27 @@ class FHSUserRegistrationForm(forms.Form):
     current_state   = forms.CharField(label="STATE", min_length=2, validators=[is_name_invalid])
     #verification    = forms.CharField(label="BULL DOG ID", min_length=10, max_length=10, validators=[is_bulldog_id])
 
+
+from django.contrib.auth import authenticate
+
+class FHSUserLoginForm(forms.Form):
+    username = forms.CharField(max_length=255, required=True)
+    password = forms.CharField(widget=forms.PasswordInput, required=True)
+
+    def clean(self):
+        username = self.cleaned_data.get('username')
+        password = self.cleaned_data.get('password')
+        user = authenticate(username=username, password=password)
+        if not user or not user.is_active:
+            raise forms.ValidationError("Invalid username or password.")
+        return self.cleaned_data
+
+    def fhs_user_login(self, request):
+        username = self.cleaned_data.get('username')
+        password = self.cleaned_data.get('password')
+        user = authenticate(username=username, password=password)
+        return user
+
+
 class ImageForm(forms.Form):
     image = forms.ImageField('UPLOAD IMAGE')
