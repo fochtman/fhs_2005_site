@@ -29,7 +29,7 @@
     <div class="container">
         <!-- TLF: in order to get collapsable navbar to cooperate with brand, put both divs at the same level -->
         <div class="navbar-header pull-left">
-            <a class="navbar-brand" href="{% url 'home:home' %}">FHS 2005</a>
+            <a class="navbar-brand" href="{% url 'home:home' %}">FHS 2005 </a>
         </div>
         <div class="navbar-header pull-right">
             <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
@@ -40,13 +40,13 @@
             </button>
             <div class="navbar-collapse collapse navbar-right">
                 <ul class="nav navbar-nav">
-                    <li> <a href="{% url 'home:events'   %}">EVENTS   </a></li>
-                    <li> <a href="{% url 'home:shop'     %}">TICKETS  </a></li>
-                    <li> <a href="{% url 'home:sponsors' %}">SPONSORS </a></li>
+                    <li> <a href="{% url 'home:events'   %}">EVENTS         </a></li>
+                    <li> <a href="{% url 'home:shop'     %}">TICKETS        </a></li>
+                    <li> <a href="{% url 'home:sponsors' %}">SPONSORS       </a></li>
                     {% if user.is_authenticated %}
-                        <li> <a href="{% url 'home:logout'   %}">LOGOUT   </a></li>
+                        <li> <a href="{% url 'home:logout'   %}">LOG OUT    </a></li>
                     {% else %}
-                        <li> <a href="{% url 'home:login'    %}">LOGIN    </a></li>
+                        <li> <a href="{% url 'home:login'    %}">LOG IN     </a></li>
                     {% endif %}
                 </ul>
             </div>
@@ -64,5 +64,13 @@
 {% block content %}
 {% endblock %}
 
+<br>
+<br>
+<br>
+<div class="container text-center">
+    <footer>
+        <p>Email FHSBULLDOG2005@gmail.com with any questions.</p>
+    </footer>
+</div>
 </body>
 </html>
