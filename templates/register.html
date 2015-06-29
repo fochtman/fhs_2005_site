@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% load staticfiles %}
 
-{% block register %}
+{% block content %}
 <link href="{% static 'css/auth.css' %}" rel="stylesheet">
 <div class="content-section-a">
   <form action="{% url 'home:register' %}" method="POST">
@@ -19,6 +19,9 @@
               <div class="fieldWrapper">
                 {{ field.errors }}
                 {{ field.label_tag }}
+                {% if field.field.required %}
+                *
+                {% endif %}
                 <br>
                 {{ field }}
               </div>
@@ -35,4 +38,4 @@
     </div>
   </form>
 </div>
-{% endblock register %}
+{% endblock %}
