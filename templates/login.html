@@ -11,35 +11,43 @@
             <div class="col-md-6 ">
                 <form action="{% url 'home:login' %}" method="POST">
                     <div class="row">
-                        <h2>LOGIN</h2>
+                        <h2>LOG IN</h2>
                         <br>
                         <div class="col-md-12 ">
+                            <p>
+                                You need to
+                                <a class="btn btn-primary" href="{% url 'home:register' %}" > SIGN UP </a>
+                                before you can log in.
+                            </p>
+                            <br>
+                            {% if form.non_field_errors %}
+                                {% for error in form.non_field_errors %}
+                                    <label class="alert alert-warning" role="alert"> {{ error }} </label>
+                                {% endfor %}
+                                <br>
+                                <a class="btn btn-info" href="{% url 'password_reset' %}">FORGOT YOUR PASSWORD?</a>
+                                <br>
+                                <br>
+                            {% endif %}
+
                             {% csrf_token %}
                             <p>
                                 <label for="id_username">EMAIL</label>
                                 <br>
                                 {{ form.username }}
                             </p>
+                            <br>
                             <p>
                                 <label for="id_password">PASSWORD</label>
                                 <br>
                                 {{ form.password }}
                             </p>
-
-                            <button type="submit" class="btn btn-success btn-large"> SUBMIT </button>
+                            <br>
+                            {% if form.non_field_errors %}
+                            {% endif %}
+                            <button type="submit" class="btn btn-success btn-large"> LOG IN </button>
                             <br>
                             <br>
-                            OR
-                            <br>
-                            <br>
-                            <a class="btn btn-primary" href="{% url 'home:register' %}" > REGISTER </a>
-                            <input type="hidden" name="next" value="{{ next }}" />
-                            <br>
-                            <br>
-                            OR
-                            <br>
-                            <br>
-                            <a class="btn btn-primary" href="{% url 'password_reset' %}">RESET PASSWORD ?</a>
                         </div>
                     </div>
             </div>
