@@ -109,7 +109,6 @@ def login_view(request):
 
     context = RequestContext(request, {'form': form})
     return render_to_response('login.html', context)
-    #return render(request, )
 
 def logout_view(request):
     from django.contrib.auth import logout
@@ -131,9 +130,8 @@ def charge(request):
                     description="Reunion Ticket",
                     receipt_email=fhs_user.user.email,
                 )
-                fhs_user.num_ticket += 1
+                fhs_user.num_ticket += int(request.POST['tk0'])
                 fhs_user.save()
-                # TODO: send email receipt
             except stripe.CardError, e:
                 return HttpResponseRedirect(reverse('home:decline'))
             else:
