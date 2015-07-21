@@ -2,83 +2,71 @@
 {% load staticfiles %}
 
 {% block content %}
+<style>
+img {
+    max-width: 100%;
+    height: auto;
+    width: auto\9; /* ie8 */
+    margin: auto;
+    display: block;
+}
+</style>
 <link href="{% static 'css/sponsors.css' %}" rel="stylesheet">
+<div class="container">
+    <div class="page-header">
+        <h1>REUNION SPONSORS</h1>
+    </div>
+    <h2>TOP DOGS</h2>
+    <div class="row">
+        <div class="col-md-6 text-center">
+            <a href="http://www.shopriffraff.com"><img src="{% static 'img/riffraff0.jpeg' %}" alt="..."></a>
+        </div>
+        <div class="col-md-6 text-center">
+            <br>
+            <br>
+            <br>
+            <br>
+            <a href="http://www.fochtmanenterprises.com"><img src="{% static 'img/fochtman.png' %}" alt="..."></a>
+        </div>
+    </div>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <h2>SENIORS</h2>
+    <br>
+    <div class="row">
+        <div class="col-md-6 text-center">
+            <a href="http://www.tesoribridalformal.com"><img src="{% static 'img/tesori-small.png' %}" alt="..."></a>
+        </div>
+        <div class="col-md-6 text-center">
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+            <a href="http://www.walkerbrothers.com"><img src="{% static 'img/Walkers.png' %}" alt="..."></a>
+        </div>
+    </div>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <h2>SPECIAL THANKS</h2>
+    <br>
+    <div class="row">
+        <div class="col-md-6 text-center">
+            <a href="http://www.wheatgrassexpress.com"><img src="{% static 'img/wheatgrassexpress.png' %}" alt="..."></a>
+        </div>
+    </div>
 
-<div class="container">
-    <div class="page-header">
-        <h1>Sponsorship Tiers</h1>
-    </div>
-    <div class="row">
-        <div class="col-8">
-            <div class="panel panel-default">
-                <div class="panel-heading">
-                    <h1 class="panel-title"><h3>Top Dog $500</h3></h1>
-                </div>
-                <div class="panel-body">
-                    <p>
-                    Logo on event tee shirt, website, and event banners. Company mentions at all events. Social media advertising on 2005 FHS Reunion Instagram account and Facebook Page.
-                    </p>
-                </div>
-            </div>
-            <div class="panel panel-default">
-                <div class="panel-heading">
-                    <h1 class="panel-title"><h3>Senior $400</h3></h1>
-                </div>
-                <div class="panel-body">
-                    <p>
-                        Logo on event website, and banners. Company mentions at all events. Social media advertising on 2005 FHS Reunion Instagram account and Facebook Page.
-                    </p>
-                </div>
-            </div>
-            <div class="panel panel-default">
-                <div class="panel-heading">
-                    <h1 class="panel-title"><h3>Junior $300</h3></h1>
-                </div>
-                <div class="panel-body">
-                    <p>
-                        Logo on event website. Company mentions at all events. Social media advertising on 2005 FHS Reunion Instagram account and Facebook Page.
-                    </p>
-                </div>
-            </div>
-            <div class="panel panel-default">
-                <div class="panel-heading">
-                    <h1 class="panel-title"><h3>Sophomore $200</h3></h1>
-                </div>
-                <div class="panel-body">
-                    <p>
-                        Company mentions at all events. Social media advertising on 2005 FHS Reunion Instagram account and Facebook Page.
-                    </p>
-                </div>
-            </div>
-            <div class="panel panel-default">
-                <div class="panel-heading">
-                    <h1 class="panel-title"><h3>Freshman $100</h3></h1>
-                </div>
-                <div class="panel-body">
-                    <p>
-                        Company mentions at all events.
-                    </p>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-<div class="container">
-    <br>
-    <br>
-    <div class="page-header">
-        <h1>Example Add Placement</h1>
-    </div>
-    <div class="row">
-        <div class="col-12">
-            <div class="sponsor">
-                <img class="sponsor-image" src="https://placehold.it/512x256">
-            </div>
-        </div>
-    </div>
-    <br>
-    <br>
-</div>
 {% endblock %}
 <!--
 Sponsorship Opportunities
